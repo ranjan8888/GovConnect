@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GovConnect - Government Services Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f8f4;
+            color: #102044;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            height: 105px;
+            background: white;
+            border-bottom: 2px solid #17274b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 65px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            border: 1.5px solid #15264d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .brand h1 {
+            font-size: 27px;
+            margin-bottom: 5px;
+        }
+
+        .brand p {
+            color: #586273;
+            letter-spacing: 1px;
+            font-size: 15px;
+        }
+
+        nav {
+            display: flex;
+            gap: 38px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #17243e;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #176d4e;
+        }
+
+        /* ================= COMMON ================= */
+
+        .hidden {
+            display: none !important;
+        }
+
+        .page {
+            min-height: calc(100vh - 105px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px;
+            color: #596170;
+        }
+
+        .green {
+            color: #176d4e;
+        }
+
+        /* ================= AUTH ================= */
+
+        .auth-page {
+            min-height: calc(100vh - 105px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 45px;
+        }
+
+        .welcome-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e4f1e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .auth-page h2 {
+            font-size: 31px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #566071;
+            font-size: 17px;
+            margin-bottom: 28px;
+        }
+
+        .auth-card {
+            width: 610px;
+            max-width: 94%;
+            background: white;
+            border: 1px solid #d9dce0;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.06);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            width: 50%;
+            padding: 13px;
+            text-align: center;
+            font-weight: bold;
+            color: #5b6472;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            color: #176d4e;
+            border-bottom: 3px solid #176d4e;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #cdd2d8;
+            border-radius: 7px;
+            padding: 14px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #176d4e;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .password-note {
+            font-size: 13px;
+            color: #5f6875;
+            margin-top: 6px;
+        }
+
+        .password-valid {
+            color: #18804e;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .primary-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 7px;
+            background: #176d4e;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            background: #11583e;
+        }
+
+        .security-box {
+            margin-top: 20px;
+            background: #edf5ff;
+            border-radius: 7px;
+            padding: 17px;
+            color: #0848a0;
+            line-height: 1.5;
+        }
+
+        .error-box {
+            background: #fff0f0;
+            color: #c62828;
+            border: 1px solid #f0aaaa;
+            padding: 15px;
+            border-radius: 7px;
+            margin-bottom: 22px;
+            font-weight: bold;
+        }
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard-layout {
+            display: flex;
+            min-height: calc(100vh - 105px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid #ddd;
+            padding: 30px 22px;
+        }
+
+        .sidebar-item {
+            padding: 15px 18px;
+            margin-bottom: 7px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background: #edf5ef;
+            color: #176d4e;
+            font-weight: bold;
+        }
+
+        .sidebar-security {
+            margin-top: 80px;
+            border: 1px solid #cfe1d4;
+            background: #f2faf4;
+            border-radius: 8px;
+            padding: 18px;
+            color: #176d4e;
+            line-height: 1.5;
+        }
+
+        .dashboard-content {
+            flex: 1;
+            padding: 28px 34px;
+        }
+
+        .welcome-card {
+            background: #f1faf4;
+            border: 1px solid #d1e6d8;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .jwt-status {
+            margin-top: 10px;
+            color: #176d4e;
+        }
+
+        .catalogue {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .catalogue h2 {
+            margin-bottom: 8px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .service-card {
+            border: 1px solid #dce0e5;
+            border-radius: 9px;
+            padding: 22px 15px;
+            text-align: center;
+            min-height: 215px;
+        }
+
+        .service-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #606a78;
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 55px;
+        }
+
+        .service-btn {
+            margin-top: 14px;
+            padding: 9px 18px;
+            border: 1px solid #176d4e;
+            color: #176d4e;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .queue {
+            margin-top: 25px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .empty-queue {
+            text-align: center;
+            padding: 55px;
+            color: #606a78;
+        }
+
+        /* ================= REQUEST ================= */
+
+        .request-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .request-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .request-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .warning {
+            color: #c62828;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .success-box {
+            background: #effaf2;
+            border: 1px solid #b7ddc0;
+            padding: 22px;
+            border-radius: 9px;
+            margin-bottom: 22px;
+        }
+
+        .success-box h3 {
+            color: #176d4e;
+            margin-bottom: 8px;
+        }
+
+        .reference {
+            display: inline-block;
+            background: #dff2e5;
+            color: #176d4e;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #e0e3e7;
+            padding: 13px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background: #fafafa;
+        }
+
+        .status {
+            background: #eaf2ff;
+            color: #1256c2;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .xss-note {
+            background: #eef5ff;
+            color: #173d91;
+            padding: 16px;
+            border-radius: 7px;
+            margin-top: 20px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            header {
+                padding: 0 25px;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                height: auto;
+                padding: 18px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .request-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .dashboard-content {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo-area">
+
+        <div class="logo">
+            GC
+        </div>
+
+        <div class="brand">
+            <h1>GovConnect</h1>
+            <p>GOVERNMENT SERVICES PORTAL</p>
+        </div>
+
+    </div>
+
+    <nav>
+        <a onclick="showPage('login')">Home</a>
+        <a onclick="showPage('dashboard')">Services</a>
+        <a onclick="showPage('requests')">My Requests</a>
+        <a>Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- ================================================= -->
+<!-- LOGIN PAGE -->
+<!-- ================================================= -->
+
+<section id="login" class="page auth-page">
+
+    <div class="welcome-icon">
+        👤
+    </div>
+
+    <h2>Welcome Back!</h2>
+
+    <p class="subtitle">
+        Sign in to continue to your account
+    </p>
+
+    <div class="auth-card">
+
+        <div class="tabs">
+
+            <div
+                id="loginTab"
+                class="tab active"
+                onclick="switchAuth('login')">
+                SIGN IN
+            </div>
+
+            <div
+                id="registerTab"
+                class="tab"
+                onclick="switchAuth('register')">
+                REGISTER
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <div id="loginError" class="error-box hidden">
+                Invalid email or password.
+            </div>
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="Enter your email">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Enter your password">
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="loginUser()">
+
+                ⇥ &nbsp; SIGN IN
+
+            </button>
+
+
+            <div class="security-box">
+
+    🛡️ <strong>Security Demo</strong><br>
+
+    Passwords must be at least 8 characters
+    and contain at least one number.
+
+    <br><br>
+
+    🔐 In the production backend, passwords are
+    hashed using <strong>bcrypt</strong> before storage.
+
+</div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <div id="registerForm" class="hidden">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    id="registerName"
+                    type="text"
+                    placeholder="Enter full name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    id="registerEmail"
+                    type="email"
+                    placeholder="Enter email">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                    <span style="font-weight:normal">
+                        (min. 8 characters, include at least one number)
+                    </span>
+                </label>
+
+                <input
+                    id="registerPassword"
+                    type="password"
+                    oninput="checkPassword()">
+
+                <div id="passwordStatus"
+                     class="password-note">
+
+                    Password must contain at least 8 characters and one number.
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Confirm Password</label>
+
+                <input
+                    id="confirmPassword"
+                    type="password">
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="registerUser()">
+
+                👤 &nbsp; CREATE ACCOUNT
+
+            </button>
+
+
+            <div class="security-box">
+
+                🛡️ Your passwords are securely hashed with
+                <strong>bcrypt</strong> before storage.
+                We never store plain text passwords.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        © 2026 GovConnect. All rights reserved.
+    </footer>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- DASHBOARD -->
+<!-- ================================================= -->
+
+<section id="dashboard" class="page hidden">
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div
+                class="sidebar-item active"
+                onclick="showPage('dashboard')">
+
+                🏠 &nbsp; Dashboard
+
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('request')">
+
+                ⊕ &nbsp; New Request
+
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('requests')">
+
+                📋 &nbsp; My Requests
+
+            </div>
+
+            <div class="sidebar-item">
+                👤 &nbsp; Profile
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="logout()">
+
+                ⇥ &nbsp; Logout
+
+            </div>
+
+
+            <div class="sidebar-security">
+
+                🛡️ <strong>Your session is secured</strong>
+
+                <br><br>
+
+                We use JWT cookies to keep you signed in securely.
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-content">
+
+
+            <div class="welcome-card">
+
+                <h2>
+                    Welcome back,
+                    <span id="welcomeName">Rajivranjan</span>!
+                </h2>
+
+                <p>
+                    You are signed in securely.
+                </p>
+
+                <div class="jwt-status">
+
+                    🛡️ Demo session active
+<strong>Frontend Demo</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="catalogue">
+
+                <h2>Service Catalogue</h2>
+
+                <p>
+                    Choose a service to submit a new request
+                    to the government department.
+                </p>
+
+
+                <div class="service-grid">
+
+
+                    <div class="service-card">
+
+                        <div class="service-icon">
+                            📜
+                        </div>
+
+                        <h3>Birth Certificate</h3>
+
+                        <p>
+                            Apply for a new birth certificate
+                            or correction.
+                        </p>
+
+                        <button
+                            class="service-btn"
+                            onclick="openRequest('Birth Certificate')">
+
+                            File Request
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="service-card">
+
+                        <div class="service-icon">
+                            💰
+                        </div>
+
+                        <h3>Income Certificate</h3>
+
+                        <p>
+                            Apply for an official income
+                            certificate.
+                        </p>
+
+                        <button
+                            class="service-btn"
+                            onclick="openRequest('Income Certificate')">
+
+                            File Request
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="service-card">
+
+                        <div class="service-icon">
+                            💧
+                        </div>
+
+                        <h3>Water Connection</h3>
+
+                        <p>
+                            Request a new municipal
+                            water connection.
+                        </p>
+
+                        <button
+                            class="service-btn"
+                            onclick="openRequest('Water Connection')">
+
+                            File Request
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="service-card">
+
+                        <div class="service-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>Grievance</h3>
+
+                        <p>
+                            Submit a grievance or public
+                            service complaint.
+                        </p>
+
+                        <button
+                            class="service-btn"
+                            onclick="openRequest('Grievance')">
+
+                            File Request
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="service-card">
+
+                        <div class="service-icon">
+                            🏛️
+                        </div>
+
+                        <h3>Scheme Application</h3>
+
+                        <p>
+                            Apply for eligible government
+                            schemes.
+                        </p>
+
+                        <button
+                            class="service-btn"
+                            onclick="openRequest('Scheme Application')">
+
+                            File Request
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="queue">
+
+                <h2>My Requests Queue</h2>
+
+                <p>
+                    Track all your submitted requests
+                    and their current status.
+                </p>
+
+                <div
+                    id="dashboardQueue"
+                    class="empty-queue">
+
+                    📭
+
+                    <h3>No requests yet</h3>
+
+                    <p>
+                        You haven't submitted any requests.
+                        Click "File Request" above to get started.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <footer>
+                © 2026 GovConnect. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- NEW REQUEST -->
+<!-- ================================================= -->
+
+<section id="request" class="page hidden">
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('dashboard')">
+
+                🏠 &nbsp; Dashboard
+
+            </div>
+
+            <div
+                class="sidebar-item active">
+
+                ⊕ &nbsp; New Request
+
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('requests')">
+
+                📋 &nbsp; My Requests
+
+            </div>
+
+            <div class="sidebar-item">
+                👤 &nbsp; Profile
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="logout()">
+
+                ⇥ &nbsp; Logout
+
+            </div>
+
+            <div class="sidebar-security">
+
+                🛡️ <strong>Your session is secured</strong>
+
+                <br><br>
+
+                We use JWT cookies to keep you signed in securely.
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-content">
+
+            <div class="request-card">
+
+                <h2>File a New Service Request</h2>
+
+                <p style="margin-bottom:25px;color:#606a78">
+
+                    Fill in the details below to submit your
+                    request to the government department.
+
+                </p>
+
+
+                <div class="request-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Service Type *
+                        </label>
+
+                        <select id="serviceType">
+
+                            <option>
+                                Birth Certificate
+                            </option>
+
+                            <option>
+                                Income Certificate
+                            </option>
+
+                            <option>
+                                Water Connection
+                            </option>
+
+                            <option>
+                                Grievance
+                            </option>
+
+                            <option>
+                                Scheme Application
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Applicant Address *
+                        </label>
+
+                        <input
+                            id="address"
+                            type="text"
+                            placeholder="Enter your address">
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Reason / Description *
+                        </label>
+
+                        <textarea
+                            id="description"
+                            maxlength="500"
+                            placeholder="Describe your request..."
+                            oninput="checkXSS()"></textarea>
+
+                        <div
+                            id="xssWarning"
+                            class="warning hidden">
+
+                            ⚠ Scripts are not allowed.
+                            Your input will be sanitized.
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Upload Document (Optional)
+                        </label>
+
+                        <input type="file">
+
+                    </div>
+
+
+                    <div class="full">
+
+                        <button
+                            class="primary-btn"
+                            onclick="submitRequest()">
+
+                            ➤ &nbsp; SUBMIT REQUEST
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <footer>
+                © 2026 GovConnect. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- REQUEST QUEUE -->
+<!-- ================================================= -->
+
+<section id="requests" class="page hidden">
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('dashboard')">
+
+                🏠 &nbsp; Dashboard
+
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="showPage('request')">
+
+                ⊕ &nbsp; New Request
+
+            </div>
+
+            <div class="sidebar-item active">
+
+                📋 &nbsp; My Requests
+
+            </div>
+
+            <div class="sidebar-item">
+                👤 &nbsp; Profile
+            </div>
+
+            <div
+                class="sidebar-item"
+                onclick="logout()">
+
+                ⇥ &nbsp; Logout
+
+            </div>
+
+            <div class="sidebar-security">
+
+                🛡️ <strong>Your session is secured</strong>
+
+                <br><br>
+
+                JWT cookies keep your session secure.
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-content">
+
+
+            <div
+                id="successBox"
+                class="success-box hidden">
+
+                <h3>
+                    ✓ Request submitted successfully!
+                </h3>
+
+                <p>
+                    Your request has been received and logged.
+                </p>
+
+                <br>
+
+                Reference Number:
+
+                <span
+                    id="referenceNumber"
+                    class="reference">
+                </span>
+
+            </div>
+
+
+            <div class="queue">
+
+                <h2>My Requests Queue</h2>
+
+                <p>
+                    Track all your submitted requests
+                    and their current status.
+                </p>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>Reference Number</th>
+                                <th>Service</th>
+                                <th>Address</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Submitted At</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="requestTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="xss-note">
+
+                    ℹ️ Special characters such as
+                    <code>&lt;</code>,
+                    <code>&gt;</code>,
+                    <code>&amp;</code>,
+                    <code>'</code> and
+                    <code>"</code>
+                    are safely escaped before display.
+                    This helps prevent stored-XSS attacks.
+
+                </div>
+
+            </div>
+
+
+            <footer>
+                © 2026 GovConnect. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    /* ================================================
+       APPLICATION DATA
+    ================================================ */
+
+    let currentUser = null;
+
+    let requests =
+        JSON.parse(localStorage.getItem("govRequests") || "[]");
+
+
+    /* ================================================
+       PAGE NAVIGATION
+    ================================================ */
+
+    function showPage(page) {
+
+        const pages = [
+            "login",
+            "dashboard",
+            "request",
+            "requests"
+        ];
+
+        pages.forEach(function(id) {
+
+            document
+                .getElementById(id)
+                .classList.add("hidden");
+
+        });
+
+        document
+            .getElementById(page)
+            .classList.remove("hidden");
+
+
+        if (page === "requests") {
+
+            renderRequests();
+
+        }
+
+    }
+
+
+    /* ================================================
+       AUTH TABS
+    ================================================ */
+
+    function switchAuth(type) {
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+        const loginTab =
+            document.getElementById("loginTab");
+
+        const registerTab =
+            document.getElementById("registerTab");
+
+
+        if (type === "login") {
+
+            loginForm.classList.remove("hidden");
+            registerForm.classList.add("hidden");
+
+            loginTab.classList.add("active");
+            registerTab.classList.remove("active");
+
+        } else {
+
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+
+            loginTab.classList.remove("active");
+            registerTab.classList.add("active");
+
+        }
+
+    }
+
+
+    /* ================================================
+       PASSWORD VALIDATION
+    ================================================ */
+
+    function checkPassword() {
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const status =
+            document.getElementById("passwordStatus");
+
+
+        if (password.length >= 8 && /\d/.test(password)) {
+
+            status.textContent =
+                "✓ Password is strong (minimum 8 characters with a number)";
+
+            status.className = "password-valid";
+
+        } else {
+
+            status.textContent =
+                "Password must contain at least 8 characters and one number.";
+
+            status.className = "password-note";
+
+        }
+
+    }
+
+
+    /* ================================================
+       REGISTER
+    ================================================ */
+
+    function registerUser() {
+
+        const name =
+            document.getElementById("registerName").value.trim();
+
+        const email =
+            document.getElementById("registerEmail").value.trim();
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const confirm =
+            document.getElementById("confirmPassword").value;
+
+
+        if (!name || !email || !password) {
+
+            alert("Please fill all required fields.");
+
+            return;
+
+        }
+
+
+        if (!email.includes("@")) {
+
+            alert("Please enter a valid email.");
+
+            return;
+
+        }
+
+
+        if (password.length < 8 || !/\d/.test(password)) {
+
+            alert(
+                "Password must contain at least 8 characters and one number."
+            );
+
+            return;
+
+        }
+
+
+        if (password !== confirm) {
+
+            alert("Passwords do not match.");
+
+            return;
+
+        }
+
+
+        /*
+         * IMPORTANT:
+         *
+         * In the real application the password MUST be sent
+         * to the Node.js backend over HTTPS.
+         *
+         * The backend will execute:
+         *
+         * bcrypt.hash(password, 12)
+         *
+         * Never store the plain password in production.
+         */
+
+
+        currentUser = {
+            name: name,
+            email: email
+        };
+
+
+        localStorage.setItem(
+            "govUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        document.getElementById("welcomeName")
+            .textContent = name;
+
+
+        alert("Account created successfully!");
+
+        showPage("dashboard");
+
+    }
+
+
+    /* ================================================
+       LOGIN
+    ================================================ */
+
+    function loginUser() {
+
+        const email =
+            document.getElementById("loginEmail").value.trim();
+
+        const password =
+            document.getElementById("loginPassword").value;
+
+
+        /*
+         * Demo login.
+         *
+         * REAL VERSION:
+         *
+         * POST /api/login
+         *
+         * Backend:
+         * bcrypt.compare(password, passwordHash)
+         *
+         * JWT is then returned through an HTTPOnly cookie.
+         */
+
+
+        if (!email || !password) {
+
+            document
+                .getElementById("loginError")
+                .classList.remove("hidden");
+
+            return;
+
+        }
+
+
+        currentUser = {
+            name: "Rajivranjan D S",
+            email: email
+        };
+
+
+        localStorage.setItem(
+            "govUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        document.getElementById("welcomeName")
+            .textContent = currentUser.name;
+
+
+        document
+            .getElementById("loginError")
+            .classList.add("hidden");
+
+
+        showPage("dashboard");
+
+    }
+
+
+    /* ================================================
+       OPEN REQUEST
+    ================================================ */
+
+    function openRequest(service) {
+
+        document.getElementById("serviceType").value =
+            service;
+
+        showPage("request");
+
+    }
+
+
+    /* ================================================
+       XSS DETECTION DEMO
+    ================================================ */
+
+    function checkXSS() {
+
+        const text =
+            document.getElementById("description").value;
+
+        const warning =
+            document.getElementById("xssWarning");
+
+
+        if (
+            /<script/i.test(text) ||
+            /onerror\s*=/i.test(text) ||
+            /javascript:/i.test(text)
+        ) {
+
+            warning.classList.remove("hidden");
+
+        } else {
+
+            warning.classList.add("hidden");
+
+        }
+
+    }
+
+
+    /* ================================================
+       SANITIZE OUTPUT
+    ================================================ */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = value;
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+     * For actual rendering, textContent is preferred.
+     * Never use:
+     *
+     * element.innerHTML = userInput;
+     *
+     * This protects the frontend from executing
+     * malicious HTML/JavaScript.
+     */
+
+
+    /* ================================================
+       SUBMIT REQUEST
+    ================================================ */
+
+    function submitRequest() {
+
+        const service =
+            document.getElementById("serviceType").value;
+
+        const address =
+            document.getElementById("address").value.trim();
+
+        const description =
+            document.getElementById("description").value.trim();
+
+
+        if (address.length < 5) {
+
+            alert("Please enter a valid address.");
+
+            return;
+
+        }
+
+
+        if (description.length < 10) {
+
+            alert(
+                "Description must contain at least 10 characters."
+            );
+
+            return;
+
+        }
+
+
+        const reference =
+            "GC-" +
+            Math.floor(
+                100000 + Math.random() * 900000
+            );
+
+
+        const newRequest = {
+
+            ref: reference,
+
+            service: service,
+
+            address: address,
+
+            description: description,
+
+            status: "Submitted",
+
+            submittedAt:
+                new Date().toLocaleString()
+
+        };
+
+
+        requests.push(newRequest);
+
+
+        localStorage.setItem(
+            "govRequests",
+            JSON.stringify(requests)
+        );
+
+
+        document.getElementById("referenceNumber")
+            .textContent = reference;
+
+
+        document
+            .getElementById("successBox")
+            .classList.remove("hidden");
+
+
+        document.getElementById("address").value = "";
+
+        document.getElementById("description").value = "";
+
+        document
+            .getElementById("xssWarning")
+            .classList.add("hidden");
+
+
+        showPage("requests");
+
+    }
+
+
+    /* ================================================
+       RENDER REQUESTS SAFELY
+    ================================================ */
+
+    function renderRequests() {
+
+        const table =
+            document.getElementById("requestTable");
+
+
+        table.innerHTML = "";
+
+
+        if (requests.length === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="7"
+                        style="text-align:center;padding:40px">
+                        No requests submitted yet.
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+
+        requests.forEach(function(request, index) {
+
+
+            /*
+             * IMPORTANT SECURITY:
+             *
+             * createElement + textContent
+             * is used instead of innerHTML
+             * for user-generated content.
+             */
+
+            const row =
+                document.createElement("tr");
+
+
+            addCell(row, index + 1);
+
+            addCell(row, request.ref);
+
+            addCell(row, request.service);
+
+            addCell(row, request.address);
+
+            addCell(row, request.description);
+
+
+            const statusCell =
+                document.createElement("td");
+
+            const status =
+                document.createElement("span");
+
+            status.className = "status";
+
+            status.textContent =
+                request.status;
+
+            statusCell.appendChild(status);
+
+            row.appendChild(statusCell);
+
+
+            addCell(
+                row,
+                request.submittedAt
+            );
+
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
+    function addCell(row, value) {
+
+        const cell =
+            document.createElement("td");
+
+        /*
+         * textContent prevents HTML/script execution.
+         */
+
+        cell.textContent = value;
+
+        row.appendChild(cell);
+
+    }
+
+
+    /* ================================================
+       LOGOUT
+    ================================================ */
+
+    function logout() {
+
+        localStorage.removeItem("govUser");
+
+        currentUser = null;
+
+        showPage("login");
+
+    }
+
+
+    /* ================================================
+       INITIAL LOAD
+    ================================================ */
+
+    window.onload = function() {
+
+        const savedUser =
+            localStorage.getItem("govUser");
+
+
+        if (savedUser) {
+
+            currentUser =
+                JSON.parse(savedUser);
+
+            document.getElementById("welcomeName")
+                .textContent =
+                currentUser.name;
+
+            showPage("dashboard");
+
+        } else {
+
+            showPage("login");
+
+        }
+
+    };
+
+</script>
+
+</body>
+</html>
